@@ -9,5 +9,8 @@
         <module name="Mapping-Specification" />
       </profile>
     </annotationProcessing>
+    <bytecodeTargetLevel>
+      <module name="ExactMapping" target="21" />
+    </bytecodeTargetLevel>
   </component>
 </project>
