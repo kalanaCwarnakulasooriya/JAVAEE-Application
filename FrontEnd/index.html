@@ -1,0 +1,83 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport"
+          content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+    <style>
+        table {
+            width: 80%;
+            border-collapse: collapse;
+            margin: 20px auto;
+            font-family: Arial, sans-serif;
+            box-shadow: 0 0 10px rgba(0,0,0,0.1);
+        }
+
+        th, td {
+            border: 1px solid #ddd;
+            padding: 12px 15px;
+            text-align: left;
+        }
+
+        th {
+            background-color: #4CAF50;
+            color: white;
+        }
+
+        tr:nth-child(even) {
+            background-color: #f2f2f2;
+        }
+
+        tr:hover {
+            background-color: #e6f7ff;
+        }
+
+        caption {
+            caption-side: top;
+            font-size: 1.5em;
+            margin: 10px;
+        }
+    </style>
+</head>
+<body>
+<section>
+    <table id="table">
+        <thead>
+        <tr>
+            <th>ID</th>
+            <th>Name</th>
+            <th>Description</th>
+            <th>Date</th>
+            <th>Place</th>
+        </tr>
+        </thead>
+        <tbody id="tbody"></tbody>
+    </table>
+</section>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
+
+<script>
+    $(document).ready(function () {
+        $.ajax({
+            url: "http://localhost:8080/App_01_Web_exploded/event",
+            method: "GET",
+            success: function (result) {
+                $.each(result, function (index, value) {
+                    $("#tbody").append(`
+                        <tr>
+                            <td>${value.eid}</td>
+                            <td>${value.ename}</td>
+                            <td>${value.edescription}</td>
+                            <td>${value.edate}</td>
+                            <td>${value.eplace}</td>
+                        </tr>
+                    `);
+                });
+            }
+        });
+    });
+</script>
+</body>
+</html>
