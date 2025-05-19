@@ -7,6 +7,11 @@
         <element id="directory" name="classes">
           <element id="module-output" name="MIME-Types" />
         </element>
+        <element id="directory" name="lib">
+          <element id="library" level="project" name="Maven: com.fasterxml.jackson.core:jackson-annotations:2.19.0" />
+          <element id="library" level="project" name="Maven: com.fasterxml.jackson.core:jackson-core:2.19.0" />
+          <element id="library" level="project" name="Maven: com.fasterxml.jackson.core:jackson-databind:2.19.0" />
+        </element>
       </element>
     </root>
   </artifact>

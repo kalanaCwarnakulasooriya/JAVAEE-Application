@@ -8,6 +8,7 @@
         <outputRelativeToContentRoot value="true" />
         <module name="Mapping-Specification" />
         <module name="MIME-Types" />
+        <module name="App1" />
       </profile>
     </annotationProcessing>
     <bytecodeTargetLevel>
