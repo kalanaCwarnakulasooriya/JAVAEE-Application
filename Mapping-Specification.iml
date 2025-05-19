@@ -6,6 +6,7 @@
         <descriptors>
           <deploymentDescriptor name="web.xml" url="file://$MODULE_DIR$/Mapping-Specification/web/web/WEB-INF/web.xml" />
           <deploymentDescriptor name="web.xml" url="file://$MODULE_DIR$/Mapping-Specification/web/web/WEB-INF/web.xml" />
+          <deploymentDescriptor name="web.xml" url="file://$MODULE_DIR$/Mapping-Specification/web/web/WEB-INF/web.xml" />
           <deploymentDescriptor name="web.xml" url="file://$MODULE_DIR$/Mapping-Specification/web/WEB-INF/web.xml" />
         </descriptors>
         <webroots>

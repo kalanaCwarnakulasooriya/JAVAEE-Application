@@ -6,6 +6,7 @@
       <list>
         <option value="$PROJECT_DIR$/Mapping-Specification/pom.xml" />
         <option value="$PROJECT_DIR$/ExactMapping/pom.xml" />
+        <option value="$PROJECT_DIR$/MIME-Types/pom.xml" />
       </list>
     </option>
     <option name="ignoredFiles">
