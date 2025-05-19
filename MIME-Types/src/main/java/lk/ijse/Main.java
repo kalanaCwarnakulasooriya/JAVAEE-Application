@@ -1,5 +1,6 @@
 package lk.ijse;
 
+import com.fasterxml.jackson.databind.ObjectMapper;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.annotation.MultipartConfig;
 import jakarta.servlet.annotation.WebServlet;
@@ -43,14 +44,21 @@ public class Main extends HttpServlet {
 
     //read multipart/form-data data form httpRequest body
 
+//    @Override
+//    protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+//        String name = req.getParameter("name");
+//        Part part = req.getPart("file");
+//        String fileName = part.getSubmittedFileName();
+//
+//        resp.setContentType("text/plain");
+//        resp.getWriter().println("Name: " + name);
+//        resp.getWriter().println("File Name: " + fileName);
+//    }
+
+    //read JSON data form httpRequest body
+
     @Override
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-        String name = req.getParameter("name");
-        Part part = req.getPart("file");
-        String fileName = part.getSubmittedFileName();
 
-        resp.setContentType("text/plain");
-        resp.getWriter().println("Name: " + name);
-        resp.getWriter().println("File Name: " + fileName);
     }
 }
