@@ -1,10 +1,12 @@
 package lk.ijse;
 
 import jakarta.servlet.ServletException;
+import jakarta.servlet.annotation.MultipartConfig;
 import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
+import jakarta.servlet.http.Part;
 
 import java.io.BufferedReader;
 import java.io.IOException;
@@ -12,6 +14,7 @@ import java.io.InputStreamReader;
 import java.util.stream.Collectors;
 
 @WebServlet("/mime")
+@MultipartConfig
 public class Main extends HttpServlet {
     //read text/plain data form httpRequest body
 //    @Override
@@ -27,13 +30,27 @@ public class Main extends HttpServlet {
 
 
     //read x-www-form-urlencoded data form httpRequest body
+//    @Override
+//    protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+//        String name = req.getParameter("name");
+//        String address = req.getParameter("address");
+//
+//        resp.setContentType("text/plain");
+//        resp.getWriter().println("Name: " + name);
+//        resp.getWriter().println("Address: " + address);
+//    }
+
+
+    //read multipart/form-data data form httpRequest body
+
     @Override
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         String name = req.getParameter("name");
-        String address = req.getParameter("address");
+        Part part = req.getPart("file");
+        String fileName = part.getSubmittedFileName();
 
         resp.setContentType("text/plain");
         resp.getWriter().println("Name: " + name);
-        resp.getWriter().println("Address: " + address);
+        resp.getWriter().println("File Name: " + fileName);
     }
 }
