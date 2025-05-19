@@ -8,10 +8,11 @@
         <outputRelativeToContentRoot value="true" />
         <module name="Mapping-Specification" />
         <module name="MIME-Types" />
-        <module name="App1" />
+        <module name="App-01" />
       </profile>
     </annotationProcessing>
     <bytecodeTargetLevel>
+      <module name="App1" target="21" />
       <module name="ExactMapping" target="21" />
     </bytecodeTargetLevel>
   </component>
