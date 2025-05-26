@@ -73,6 +73,29 @@ public class EventServlet extends HttpServlet {
         }
     }
 
+    @Override
+    protected void doPut(HttpServletRequest req, HttpServletResponse resp) throws IOException {
+        ObjectMapper mapper = new ObjectMapper();
+        Map<String, String> data = mapper.readValue(req.getReader(), Map.class);
+
+        try (Connection connection = getConnection()) {
+            PreparedStatement pstm = connection.prepareStatement(
+                    "UPDATE events SET ename=?, edescription=?, edate=?, eplace=? WHERE eid=?"
+            );
+            pstm.setString(1, data.get("ename"));
+            pstm.setString(2, data.get("edescription"));
+            pstm.setString(3, data.get("edate"));
+            pstm.setString(4, data.get("eplace"));
+            pstm.setString(5, data.get("eid"));
+            pstm.executeUpdate();
+
+            setCORS(resp);
+            resp.setStatus(HttpServletResponse.SC_OK);
+        } catch (Exception e) {
+            resp.sendError(HttpServletResponse.SC_INTERNAL_SERVER_ERROR, e.getMessage());
+        }
+    }
+
     private void setCORS(HttpServletResponse resp) {
         resp.setHeader("Access-Control-Allow-Origin", "*");
         resp.setHeader("Access-Control-Allow-Methods", "GET, POST, PUT, DELETE, OPTIONS");

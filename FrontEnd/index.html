@@ -192,6 +192,24 @@
             });
     });
 
+    $("#updateEvent").on("click", function () {
+        const eventData = getEventFormData();
+        fetch(BASE_URL, {
+            method: "PUT",
+            headers: { "Content-Type": "application/json" },
+            body: JSON.stringify(eventData)
+        })
+            .then(res => {
+                if (res.ok) {
+                    alert("Event updated successfully!");
+                    loadEvents();
+                    resetForm();
+                } else {
+                    alert("Update failed.");
+                }
+            });
+    });
+
     $("#tbody").on("click", "tr", function () {
         const tds = $(this).children("td");
         $("#eventId").val(tds.eq(0).text());
