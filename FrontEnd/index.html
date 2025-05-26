@@ -42,20 +42,44 @@
     </style>
 </head>
 <body>
-<section>
-    <table id="table">
-        <thead>
-        <tr>
-            <th>ID</th>
-            <th>Name</th>
-            <th>Description</th>
-            <th>Date</th>
-            <th>Place</th>
-        </tr>
-        </thead>
-        <tbody id="tbody"></tbody>
-    </table>
-</section>
+<h1>Events</h1>
+
+<div class="form-container">
+    <label for="eventId">Event ID:</label>
+    <input type="text" id="eventId" name="eventId">
+
+    <label for="eventName">Event Name:</label>
+    <input type="text" id="eventName" name="eventName">
+
+    <label for="eventDescription">Event Description:</label>
+    <input type="text" id="eventDescription" name="eventDescription">
+
+    <label for="eventDate">Event Date:</label>
+    <input type="date" id="eventDate" name="eventDate">
+
+    <label for="eventLocation">Event Location:</label>
+    <input type="text" id="eventLocation" name="eventLocation">
+
+    <button id="saveEvent">Save</button>
+    <button id="updateEvent">Update</button>
+    <button id="deleteEvent">Delete</button>
+</div>
+
+<table id="table">
+    <thead>
+    <tr>
+        <th>ID</th>
+        <th>Name</th>
+        <th>Description</th>
+        <th>Date</th>
+        <th>Place</th>
+    </tr>
+    </thead>
+    <tbody id="tbody"></tbody>
+</table>
+
+
+
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
 
 <script>
