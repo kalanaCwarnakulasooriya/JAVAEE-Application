@@ -13,6 +13,11 @@ public class PathVariableServlet extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         String pathInfo = req.getPathInfo();
-        System.out.println("pathInfo : " + pathInfo);
+//        System.out.println("pathInfo : " + pathInfo);
+
+        String[] parts = pathInfo.split("/");
+        for (String part : parts) {
+            System.out.println("part : " + part);
+        }
     }
 }
