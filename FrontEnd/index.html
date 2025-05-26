@@ -5,10 +5,60 @@
     <meta name="viewport"
           content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <title>Document</title>
+    <title>Events Manage</title>
     <style>
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: #f4f7f8;
+            margin: 0;
+            padding: 20px;
+        }
+
+        h1 {
+            text-align: center;
+            color: #333;
+        }
+
+        .form-container {
+            background: #fff;
+            max-width: 600px;
+            margin: 0 auto 30px auto;
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+        }
+
+        label {
+            display: block;
+            margin-top: 15px;
+            color: #555;
+        }
+
+        input[type="text"], input[type="date"] {
+            width: 100%;
+            padding: 10px;
+            margin-top: 5px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+            box-sizing: border-box;
+        }
+
+        button {
+            margin-top: 20px;
+            padding: 10px 15px;
+            border: none;
+            border-radius: 5px;
+            color: white;
+            cursor: pointer;
+            margin-right: 10px;
+        }
+
+        #saveEvent { background-color: #28a745; }
+        #updateEvent { background-color: #007bff; }
+        #deleteEvent { background-color: #dc3545; }
+
         table {
-            width: 80%;
+            width: 90%;
             border-collapse: collapse;
             margin: 20px auto;
             font-family: Arial, sans-serif;
@@ -42,7 +92,7 @@
     </style>
 </head>
 <body>
-<h1>Events</h1>
+<h1>Events Manage</h1>
 
 <div class="form-container">
     <label for="eventId">Event ID:</label>
@@ -83,25 +133,32 @@
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
 
 <script>
+    const BASE_URL = "http://localhost:8080/App_01_Web_exploded/event";
     $(document).ready(function () {
+        loadEvents();
+    });
+
+    function loadEvents() {
+        $("#tbody").empty();
         $.ajax({
-            url: "http://localhost:8080/App_01_Web_exploded/event",
+            url: BASE_URL,
             method: "GET",
-            success: function (result) {
-                $.each(result, function (index, value) {
+            success: function (events) {
+                $.each(events, function (index, event) {
                     $("#tbody").append(`
                         <tr>
-                            <td>${value.eid}</td>
-                            <td>${value.ename}</td>
-                            <td>${value.edescription}</td>
-                            <td>${value.edate}</td>
-                            <td>${value.eplace}</td>
+                            <td>${event.eid}</td>
+                            <td>${event.ename}</td>
+                            <td>${event.edescription}</td>
+                            <td>${event.edate}</td>
+                            <td>${event.eplace}</td>
                         </tr>
                     `);
                 });
+                // resetForm();
             }
         });
-    });
+    }
 </script>
 </body>
 </html>
