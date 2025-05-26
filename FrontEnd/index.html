@@ -155,9 +155,58 @@
                         </tr>
                     `);
                 });
-                // resetForm();
+                resetForm();
             }
         });
+    }
+
+    function getEventFormData() {
+        return {
+            eid: $("#eventId").val(),
+            ename: $("#eventName").val(),
+            edescription: $("#eventDescription").val(),
+            edate: $("#eventDate").val(),
+            eplace: $("#eventLocation").val()
+        };
+    }
+
+    $("#saveEvent").on("click", function () {
+        const eventData = getEventFormData();
+        if (!eventData.ename || !eventData.edescription || !eventData.edate || !eventData.eplace) {
+            alert("Please fill in all fields.");
+            return;
+        }
+        fetch(BASE_URL, {
+            method: "POST",
+            headers: { "Content-Type": "application/json" },
+            body: JSON.stringify(eventData)
+        })
+            .then(res => {
+                if (res.ok) {
+                    alert("Event saved successfully!");
+                    loadEvents();
+                    resetForm();
+                } else {
+                    alert("Save failed.");
+                }
+            });
+    });
+
+    $("#tbody").on("click", "tr", function () {
+        const tds = $(this).children("td");
+        $("#eventId").val(tds.eq(0).text());
+        $("#eventName").val(tds.eq(1).text());
+        $("#eventDescription").val(tds.eq(2).text());
+        $("#eventDate").val(tds.eq(3).text());
+        $("#eventLocation").val(tds.eq(4).text());
+    });
+
+    function resetForm() {
+        $("#eventId").val('');
+        $("#eventName").val('');
+        $("#eventDescription").val('');
+        $("#eventDate").val('');
+        $("#eventLocation").val('');
     }
 </script>
 </body>

@@ -50,9 +50,38 @@ public class EventServlet extends HttpServlet {
         }
     }
 
+    @Override
+    protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws IOException {
+        ObjectMapper mapper = new ObjectMapper();
+        Map<String, String> data = mapper.readValue(req.getReader(), Map.class);
+
+        try (Connection connection = getConnection()) {
+            PreparedStatement pstm = connection.prepareStatement(
+                    "INSERT INTO events (eid, ename, edescription, edate, eplace) VALUES (?, ?, ?, ?, ?)"
+            );
+            pstm.setString(1, data.get("eid"));
+            pstm.setString(2, data.get("ename"));
+            pstm.setString(3, data.get("edescription"));
+            pstm.setString(4, data.get("edate"));
+            pstm.setString(5, data.get("eplace"));
+            pstm.executeUpdate();
+
+            setCORS(resp);
+            resp.setStatus(HttpServletResponse.SC_CREATED);
+        } catch (Exception e) {
+            resp.sendError(HttpServletResponse.SC_INTERNAL_SERVER_ERROR, e.getMessage());
+        }
+    }
+
     private void setCORS(HttpServletResponse resp) {
         resp.setHeader("Access-Control-Allow-Origin", "*");
         resp.setHeader("Access-Control-Allow-Methods", "GET, POST, PUT, DELETE, OPTIONS");
         resp.setHeader("Access-Control-Allow-Headers", "Content-Type");
+    }
+
+    @Override
+    protected void doOptions(HttpServletRequest req, HttpServletResponse resp) throws IOException {
+        setCORS(resp);
+        resp.setStatus(HttpServletResponse.SC_OK);
     }
 }
