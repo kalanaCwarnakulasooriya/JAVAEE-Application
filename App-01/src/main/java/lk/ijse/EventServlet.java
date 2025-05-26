@@ -41,7 +41,7 @@ public class EventServlet extends HttpServlet {
                 elist.add(event);
             }
 
-            setCORS(resp);
+//            setCORS(resp);
             resp.setContentType("application/json");
             new ObjectMapper().writeValue(resp.getWriter(), elist);
 
@@ -66,7 +66,7 @@ public class EventServlet extends HttpServlet {
             pstm.setString(5, data.get("eplace"));
             pstm.executeUpdate();
 
-            setCORS(resp);
+//            setCORS(resp);
             resp.setStatus(HttpServletResponse.SC_CREATED);
         } catch (Exception e) {
             resp.sendError(HttpServletResponse.SC_INTERNAL_SERVER_ERROR, e.getMessage());
@@ -89,7 +89,7 @@ public class EventServlet extends HttpServlet {
             pstm.setString(5, data.get("eid"));
             pstm.executeUpdate();
 
-            setCORS(resp);
+//            setCORS(resp);
             resp.setStatus(HttpServletResponse.SC_OK);
         } catch (Exception e) {
             resp.sendError(HttpServletResponse.SC_INTERNAL_SERVER_ERROR, e.getMessage());
@@ -110,7 +110,7 @@ public class EventServlet extends HttpServlet {
             pstm.setString(1, eid);
             int affected = pstm.executeUpdate();
 
-            setCORS(resp);
+//            setCORS(resp);
             if (affected > 0) {
                 resp.setStatus(HttpServletResponse.SC_OK);
             } else {
@@ -121,15 +121,15 @@ public class EventServlet extends HttpServlet {
         }
     }
 
-    private void setCORS(HttpServletResponse resp) {
-        resp.setHeader("Access-Control-Allow-Origin", "*");
-        resp.setHeader("Access-Control-Allow-Methods", "GET, POST, PUT, DELETE, OPTIONS");
-        resp.setHeader("Access-Control-Allow-Headers", "Content-Type");
-    }
+//    private void setCORS(HttpServletResponse resp) {
+//        resp.setHeader("Access-Control-Allow-Origin", "*");
+//        resp.setHeader("Access-Control-Allow-Methods", "GET, POST, PUT, DELETE, OPTIONS");
+//        resp.setHeader("Access-Control-Allow-Headers", "Content-Type");
+//    }
 
-    @Override
-    protected void doOptions(HttpServletRequest req, HttpServletResponse resp) throws IOException {
-        setCORS(resp);
-        resp.setStatus(HttpServletResponse.SC_OK);
-    }
+//    @Override
+//    protected void doOptions(HttpServletRequest req, HttpServletResponse resp) throws IOException {
+//        setCORS(resp);
+//        resp.setStatus(HttpServletResponse.SC_OK);
+//    }
 }
