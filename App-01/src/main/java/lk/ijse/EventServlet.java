@@ -96,6 +96,31 @@ public class EventServlet extends HttpServlet {
         }
     }
 
+    @Override
+    protected void doDelete(HttpServletRequest req, HttpServletResponse resp) throws IOException {
+        String eid = req.getParameter("eid");
+
+        if (eid == null || eid.isEmpty()) {
+            resp.sendError(HttpServletResponse.SC_BAD_REQUEST, "Missing event ID for deletion.");
+            return;
+        }
+
+        try (Connection connection = getConnection()) {
+            PreparedStatement pstm = connection.prepareStatement("DELETE FROM events WHERE eid=?");
+            pstm.setString(1, eid);
+            int affected = pstm.executeUpdate();
+
+            setCORS(resp);
+            if (affected > 0) {
+                resp.setStatus(HttpServletResponse.SC_OK);
+            } else {
+                resp.sendError(HttpServletResponse.SC_NOT_FOUND, "Event not found.");
+            }
+        } catch (Exception e) {
+            resp.sendError(HttpServletResponse.SC_INTERNAL_SERVER_ERROR, e.getMessage());
+        }
+    }
+
     private void setCORS(HttpServletResponse resp) {
         resp.setHeader("Access-Control-Allow-Origin", "*");
         resp.setHeader("Access-Control-Allow-Methods", "GET, POST, PUT, DELETE, OPTIONS");
