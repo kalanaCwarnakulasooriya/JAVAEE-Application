@@ -1,10 +1,12 @@
 package lk.ijse;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
+import jakarta.servlet.ServletException;
 import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
+import org.apache.commons.dbcp2.BasicDataSource;
 
 import java.io.IOException;
 import java.sql.*;
@@ -15,18 +17,30 @@ import java.util.Map;
 
 @WebServlet("/event")
 public class EventServlet extends HttpServlet {
-    private Connection getConnection() throws SQLException, ClassNotFoundException {
-        Class.forName("com.mysql.cj.jdbc.Driver");
-        return DriverManager.getConnection(
-                "jdbc:mysql://localhost:3306/event",
-                "root",
-                "Ijse@1234"
-        );
+    private BasicDataSource dataSource;
+    @Override
+    public void init() throws ServletException {
+        //50
+        dataSource = new BasicDataSource();
+        dataSource.setDriverClassName("com.mysql.cj.jdbc.Driver");
+        dataSource.setUrl("jdbc:mysql://localhost:3306/event");
+        dataSource.setUsername("root");
+        dataSource.setPassword("Ijse@1234");
+        dataSource.setInitialSize(5);
+        dataSource.setMaxTotal(50);
     }
+//    private Connection getConnection() throws SQLException, ClassNotFoundException {
+//        Class.forName("com.mysql.cj.jdbc.Driver");
+//        return DriverManager.getConnection(
+//                "jdbc:mysql://localhost:3306/event",
+//                "root",
+//                "Ijse@1234"
+//        );
+//    }
 
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws IOException {
-        try (Connection connection = getConnection()) {
+        try (Connection connection = dataSource.getConnection()) {
             PreparedStatement pstm = connection.prepareStatement("SELECT * FROM events");
             ResultSet resultSet = pstm.executeQuery();
 
@@ -55,7 +69,7 @@ public class EventServlet extends HttpServlet {
         ObjectMapper mapper = new ObjectMapper();
         Map<String, String> data = mapper.readValue(req.getReader(), Map.class);
 
-        try (Connection connection = getConnection()) {
+        try (Connection connection = dataSource.getConnection()) {
             PreparedStatement pstm = connection.prepareStatement(
                     "INSERT INTO events (eid, ename, edescription, edate, eplace) VALUES (?, ?, ?, ?, ?)"
             );
@@ -78,7 +92,7 @@ public class EventServlet extends HttpServlet {
         ObjectMapper mapper = new ObjectMapper();
         Map<String, String> data = mapper.readValue(req.getReader(), Map.class);
 
-        try (Connection connection = getConnection()) {
+        try (Connection connection = dataSource.getConnection()) {
             PreparedStatement pstm = connection.prepareStatement(
                     "UPDATE events SET ename=?, edescription=?, edate=?, eplace=? WHERE eid=?"
             );
@@ -105,7 +119,7 @@ public class EventServlet extends HttpServlet {
             return;
         }
 
-        try (Connection connection = getConnection()) {
+        try (Connection connection = dataSource.getConnection()) {
             PreparedStatement pstm = connection.prepareStatement("DELETE FROM events WHERE eid=?");
             pstm.setString(1, eid);
             int affected = pstm.executeUpdate();
