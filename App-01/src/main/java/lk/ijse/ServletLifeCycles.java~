@@ -12,17 +12,17 @@ import java.io.IOException;
 public class ServletLifeCycles extends HttpServlet {
     @Override
     public void init() throws ServletException {
-        System.out.println("init method called : Servlet is being initialized");//run to 1
+        System.out.println("init method called : Servlet is being initialized");
     }
 
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-        System.out.println("doGet method called : Processing GET request");//run to 2
+        System.out.println("doGet method called : Processing GET request");
         resp.getWriter().println("Hello World");
     }
 
     @Override
     public void destroy() {
-        System.out.println("destroy method called : Servlet is being destroyed");//project close
+        System.out.println("destroy method called : Servlet is being destroyed");
     }
 }

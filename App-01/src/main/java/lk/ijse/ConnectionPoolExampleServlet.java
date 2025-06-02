@@ -1,6 +1,7 @@
 package lk.ijse;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
+import jakarta.servlet.ServletContext;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.HttpServlet;
@@ -20,21 +21,23 @@ import java.util.Map;
 
 @WebServlet("/connectionpool")
 public class ConnectionPoolExampleServlet extends HttpServlet {
-    private BasicDataSource dataSource;
+//    private BasicDataSource dataSource;
     @Override
     public void init() throws ServletException {
         //50
-        dataSource = new BasicDataSource();
-        dataSource.setDriverClassName("com.mysql.cj.jdbc.Driver");
-        dataSource.setUrl("jdbc:mysql://localhost:3306/event");
-        dataSource.setUsername("root");
-        dataSource.setPassword("Ijse@1234");
-        dataSource.setInitialSize(5);
-        dataSource.setMaxTotal(50);
+//        dataSource = new BasicDataSource();
+//        dataSource.setDriverClassName("com.mysql.cj.jdbc.Driver");
+//        dataSource.setUrl("jdbc:mysql://localhost:3306/event");
+//        dataSource.setUsername("root");
+//        dataSource.setPassword("Ijse@1234");
+//        dataSource.setInitialSize(5);
+//        dataSource.setMaxTotal(50);
     }
 
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+        ServletContext servletContext = getServletContext();
+        BasicDataSource dataSource = (BasicDataSource) servletContext.getAttribute("dataSource");
         try {
             Connection connection = dataSource.getConnection();
             ResultSet resultSet = connection.createStatement().executeQuery("SELECT * FROM events");
@@ -58,6 +61,8 @@ public class ConnectionPoolExampleServlet extends HttpServlet {
 
     @Override
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+        ServletContext servletContext = getServletContext();
+        BasicDataSource dataSource = (BasicDataSource) servletContext.getAttribute("dataSource");
         ObjectMapper mapper = new ObjectMapper();
         Map<String, String> data = mapper.readValue(req.getReader(), Map.class);
 
